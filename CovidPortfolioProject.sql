@@ -1,4 +1,9 @@
--- Data Exploration of Covid 19 dataset
+/*
+Covid 19 Data Exploration 
+
+Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
+
+*/
 
 -- Selecting Data
 
@@ -43,14 +48,6 @@ GROUP BY Location
 ORDER BY TotalDeathCount desc
 
 -- By Continent
---SELECT location, MAX(cast(total_deaths as int)) as TotalDeathCount
---FROM PortfolioProject..CovidDeaths
-----WHERE location like '%Finland%'
---WHERE continent is null
---GROUP BY location
---ORDER BY TotalDeathCount desc
-
--- By Continent
 -- Continents vs Highest Death Count
 
 SELECT continent, MAX(cast(total_deaths as int)) as TotalDeathCount
@@ -83,7 +80,7 @@ JOIN PortfolioProject..CovidVaccinations vac
 WHERE dea.continent is not null
 ORDER BY 2,3
 
--- CTE
+-- Using CTE to perform Calculation on Partition By in previous query
 
 With PopvsVac (Continent, Location, Date, Population,New_Vaccinations, RollingVaccinated)
 As 
@@ -132,7 +129,7 @@ JOIN PortfolioProject..CovidVaccinations vac
 Select *, (RollingVaccinated/Population)*100
 From #PercentPopulationVaccinated
 
--- Creating View 
+-- Creating View to store data for later visualizations
 
 CREATE VIEW PercentPopulationVaccinated AS
 SELECT dea.continent as Continent, dea.location as Location, 
